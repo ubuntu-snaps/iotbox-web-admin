@@ -7,10 +7,8 @@ base: core24
 confinement: devmode
 grade: stable
 
-architectures:
-  - build-on: amd64
-  - build-on: arm64
-  - build-on: armhf
+platforms:
+  amd64:
 
 apps:
   nginx:
