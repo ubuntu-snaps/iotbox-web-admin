@@ -1,0 +1,6 @@
+#!/bin/bash
+# .husky/pre-commit
+set -e
+pnpm tsc
+pnpm lint-staged
+pnpm test

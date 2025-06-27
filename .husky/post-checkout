@@ -1,0 +1,4 @@
+#!/bin/bash
+# .husky/post-checkout
+set -e
+pnpm install

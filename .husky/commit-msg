@@ -1,0 +1,4 @@
+#!/bin/bash
+# .husky/commit-msg
+set -e
+pnpm commitlint --edit $1

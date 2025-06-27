@@ -1,0 +1,50 @@
+name: iotbox-web-admin
+summary: iotbox-web-admin
+description: iotbox-web-admin
+version: git
+
+base: core24
+confinement: devmode
+grade: stable
+
+architectures:
+  - build-on: amd64
+  - build-on: arm64
+  - build-on: armhf
+
+apps:
+  nginx:
+    command: sbin/nginx -p $SNAP_DATA
+    daemon: simple
+    plugs:
+      - network
+      - network-bind
+
+parts:
+  nginx:
+    plugin: autotools
+    source: https://nginx.org/download/nginx-1.23.4.tar.gz
+    autotools-configure-parameters:
+      - --prefix=''
+    build-packages:
+      - libpcre3-dev
+      - zlib1g-dev
+    stage-packages:
+      - libpcre3
+      - zlib1g
+    stage:
+      - -html
+  html:
+    source: .
+    plugin: nil
+    build-packages:
+      - curl
+    override-build: |
+      craftctl default
+      curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+      apt-get install -y nodejs
+      corepack enable
+      pnpm install
+      pnpm run build
+      mkdir -p $CRAFT_PART_INSTALL/html
+      cp --archive --link --no-dereference dist/* $CRAFT_PART_INSTALL/html

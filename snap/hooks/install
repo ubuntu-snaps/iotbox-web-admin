@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+snapctl set port=8100
+
+mkdir -p $SNAP_DATA/conf
+mkdir -p $SNAP_DATA/html
+mkdir -p $SNAP_DATA/logs
+mkdir -p $SNAP_DATA/temp
+
+cp $SNAP/conf/mime.types $SNAP_DATA/conf/
+
